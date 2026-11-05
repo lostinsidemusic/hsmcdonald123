@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>	
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>McDonald's | 맛있는 즐거움</title>
+	<!-- FontAwesome 아이콘 CDN -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+	
+  <style>
+    /* CSS Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ul, ol { list-style: none; }
+    a { text-decoration: none; color: inherit; }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #111; color: #fff; }
+
+    /* Header & Side Nav Layout */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      background: #DA291C;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 100;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      color: #FFC72C;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #gnb {
+      margin-top: 20px;
+    }
+    #gnb li {
+      margin-bottom: 15px;
+    }
+    #gnb a {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    #gnb a:hover {
+      background: #FFC72C;
+      color: #DA291C;
+    }
+    #gnb a i {
+      margin-right: 10px;
+      width: 18px;
+    }
+
+    .snsSet {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    .snsSet a {
+      color: #FFC72C;
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+    .snsSet a:hover {
+      transform: scale(1.2);
+    }
+
+    /* Section & Responsive Grid Layout */
+    section {
+      margin-left: 200px;
+      display: flex;
+      flex-wrap: wrap;
+      min-height: 100vh;
+    }
+
+    article {
+      width: 25%;
+      height: 33.333vh;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+    }
+
+    /* 첫 번째 메인 카드 확대 */
+    article:nth-child(1) {
+      width: 50%;
+      height: 66.666vh;
+    }
+
+    /* Background Card Styles (.bg) */
+    .bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover !important;
+      background-position: center !important;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      position: relative;
+      transition: transform 0.5s ease;
+    }
+    article:hover .bg, article:hover .txt {
+      transform: scale(1.05);
+    }
+
+    .bg span {
+      background: rgba(218, 41, 28, 0.9);
+      color: #FFC72C;
+      font-size: 18px;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+
+    /* 이미지 카드 (.bg) 배경 이미지 */
+    .bg1 { background-image: url('https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1000&auto=format&fit=crop'); }
+    .bg2 { background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1000&auto=format&fit=crop'); }
+    .bg3 { background-image: url('https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=1000&auto=format&fit=crop'); }
+    .bg4 { background-image: url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1000&auto=format&fit=crop'); }
+    .bg5 { background-image: url('https://images.unsplash.com/photo-1561758033-d89a9ad46330?q=80&w=1000&auto=format&fit=crop'); }
+    .bg6 { background-image: url('https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1000&auto=format&fit=crop'); }
+    .bg7 { background-image: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1000&auto=format&fit=crop'); }
+
+    /* Text Card Styles (.txt) */
+    .txt {
+      width: 100%;
+      height: 100%;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      background-size: cover !important;
+      background-position: center !important;
+      transition: transform 0.5s ease;
+    }
+
+    /* 어두운 반투명 필터 */
+    .txt::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 1;
+    }
+
+    .txt * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .txt .fa {
+      font-size: 22px;
+      color: #FFC72C;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+    
+    /* Hover 시 아이콘 슬라이드 효과 */
+    article:hover .txt .fa-arrow-right {
+      transform: translateX(8px);
+    }
+
+    .txt strong {
+      color: #FFC72C;
+      font-size: 19px;
+      display: block;
+      margin-bottom: 6px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+    .txt em {
+      font-style: normal;
+      color: #ffffff;
+      font-size: 13px;
+      line-height: 1.6;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    /* .txt 각 카드별 고유 배경 이미지 */
+    article:nth-child(2) .txt { background-image: url('https://images.unsplash.com/photo-1534790566855-4cb788d389ec?q=80&w=1000&auto=format&fit=crop'); }
+    article:nth-child(3) .txt { background-image: url('https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1000&auto=format&fit=crop'); }
+    article:nth-child(6) .txt { background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1000&auto=format&fit=crop'); }
+    article:nth-child(8) .txt { background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop'); }
+    article:nth-child(11) .txt { background-image: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1000&auto=format&fit=crop'); }
+
+    /* [수정] 주문하기 카드 전용 스타일 */
+    .order-card {
+      align-items: center;
+      text-align: center;
+    }
+    .order-card .order-icon {
+      font-size: 32px;
+      color: #FFC72C;
+      margin-bottom: 12px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .order-card .btn-order {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 20px;
+      background: #DA291C;
+      color: #FFC72C;
+      font-weight: 900;
+      font-size: 14px;
+      border-radius: 20px;
+      border: 2px solid #FFC72C;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    article:hover .order-card .order-icon {
+      transform: scale(1.25) translateY(-4px); /* 마우스 올렸을 때 살짝 튀어오름 */
+    }
+    article:hover .order-card .btn-order {
+      background: #FFC72C;
+      color: #DA291C;
+    }
+
+    /* 반응형 미디어 쿼리 */
+    @media screen and (max-width: 1024px) {
+      header {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        align-items: center;
+      }
+      #gnb { display: flex; margin: 0; }
+      #gnb li { margin: 0 5px; }
+      .snsSet { display: none; }
+      section { margin-left: 0; }
+      article { width: 50%; height: 30vh; }
+      article:nth-child(1) { width: 100%; height: 40vh; }
+    }
+
+    @media screen and (max-width: 640px) {
+      #gnb { display: none; }
+      article { width: 100%; height: 250px; }
+      article:nth-child(1) { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+	<header>
+		<h1>McDonald's</h1>
+		<ul id="gnb">
+			<li><a href="#"><i class="fa fa-cutlery"></i>Menu</a></li>
+			<li><a href="#"><i class="fa fa-coffee"></i>McCafé</a></li>
+			<li><a href="#"><i class="fa fa-gift"></i>Happy Meal</a></li>
+			<li><a href="#"><i class="fa fa-map-marker"></i>매장 찾기</a></li>	
+		</ul>		
+
+		<div class="snsSet">
+			<a href="#"><i class="fa fa-instagram"></i></a>
+			<a href="#"><i class="fa fa-facebook"></i></a>
+			<a href="#"><i class="fa fa-twitter"></i></a>
+			<a href="#"><i class="fa fa-youtube"></i></a>
+		</div>
+	</header>
+	
+	<section>
+		<article>			
+			<div class="bg bg1">		
+				<span>McDonald's</span>
+			</div>			
+		</article>
+		
+		<article>		
+			<div class="txt">
+				<i class="fa fa-arrow-right"></i>
+				<p>
+					<strong>맛있는 즐거움, 맥도날드</strong><br />
+					<em>신선한 재료와 다양한 메뉴로 일상 속 즐거움을 전합니다.<br />
+					가족, 친구와 함께 맛있는 순간을 만나보세요.</em>
+				</p>
+			</div>	
+		</article>
+		
+		<!-- [수정] 자연스러운 주문하기 카드 -->
+		<article>			
+			<div class="txt order-card">	
+				<i class="fa fa-shopping-cart order-icon"></i>
+				<strong>McDelivery</strong>
+				<span class="btn-order">지금 주문하기</span>
+			</div>	
+		</article>
+		
+		<article>
+			<div class="bg bg2">
+				<span>Burgers</span>
+			</div>	
+		</article>
+		
+		<article>
+			<div class="bg bg3">
+				<span>Fries</span>
+			</div>	
+		</article>
+		
+		<article>	
+			<div class="txt">	
+				<i class="fa fa-arrow-right"></i>
+				<p>
+					<strong>취향대로 즐기는 메뉴</strong><br />
+					<em>든든한 버거부터 바삭한 감자튀김까지.<br />
+					좋아하는 메뉴를 골라보세요.</em>
+				</p>
+			</div>	
+		</article>
+		
+		<article>
+			<div class="bg bg4">
+				<span>McCafé</span>
+			</div>
+		</article>
+		
+		<article>	
+			<div class="txt">	
+				<i class="fa fa-arrow-right"></i>
+				<p>
+					<strong>언제 어디서나 편리하게</strong><br />
+					<em>가까운 매장에서 즐기는 한 끼<br />
+					매장 정보를 확인해 보세요.</em>
+				</p>
+			</div>	
+		</article>
+		
+		<article>		
+			<div class="bg bg5">
+				<span>Happy Meal</span>
+			</div>
+		</article>
+		
+		<article>	
+			<div class="bg bg6">
+				<span>Dessert</span>
+			</div>	
+		</article>
+		
+		<article>
+			<div class="txt">	
+				<i class="fa fa-arrow-right"></i>
+				<p>
+					<strong>함께하는 즐거운 시간</strong><br />
+					<em>모두가 함께 즐길 수 있는 메뉴와 시간</em>
+				</p>
+			</div>	
+		</article>
+		
+		<article>	
+			<div class="bg bg7">
+				<span>Store</span>
+			</div>		
+		</article>
+		
+	</section>
+
+</body>
+</html>
